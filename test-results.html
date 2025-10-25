@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCL-90症状自评量表 - 测试结果页面</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4a90e2',
+                        secondary: '#50e3c2',
+                        accent: '#ff6b6b',
+                        neutral: '#f7f7f7',
+                        'neutral-dark': '#e0e0e0'
+                    },
+                    fontFamily: {
+                        sans: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            }
+            .transition-all {
+                transition: all 0.3s ease;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <!-- 页面标题 -->
+            <div class="bg-primary text-white p-6">
+                <h1 class="text-2xl md:text-3xl font-bold text-center">SCL-90症状自评量表</h1>
+                <p class="text-center mt-2 text-sm opacity-90">Symptom Checklist 90</p>
+            </div>
+            
+            <!-- 进度指示器 -->
+            <div class="bg-gray-100 px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <span class="ml-2 text-sm text-gray-600">填写问卷</span>
+                    </div>
+                    <div class="h-1 flex-grow mx-4 bg-gray-300 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary" style="width: 100%;"></div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <span class="ml-2 text-sm text-gray-600">查看结果</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 结果内容 -->
+            <div class="p-6">
+                <h2 class="text-xl font-bold mb-6 text-center">测评结果</h2>
+                
+                <!-- 总体指标 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                        <h3 class="text-lg font-semibold text-blue-700 mb-2">总体指标</h3>
+                        <table class="w-full">
+                            <tbody>
+                                <tr>
+                                    <td class="py-1 text-gray-600">总分：</td>
+                                    <td class="py-1 font-semibold text-blue-700">210 分</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 text-gray-600">总症状指数：</td>
+                                    <td class="py-1 font-semibold text-blue-700">2.33</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 text-gray-600">阳性项目数：</td>
+                                    <td class="py-1 font-semibold text-blue-700">52 项</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 text-gray-600">阴性项目数：</td>
+                                    <td class="py-1 font-semibold text-blue-700">38 项</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 text-gray-600">阳性症状均分：</td>
+                                    <td class="py-1 font-semibold text-blue-700">3.15</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 结果解释警告 -->
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fa fa-exclamation-triangle text-yellow-400"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-yellow-700">
+                                    <strong>总体评估：</strong>您的总分210分，阳性项目数52项，表明存在中度心理困扰。量表结果提示您可能需要关注自己的心理健康状况。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 因子分表格 -->
+                <div class="mb-8 overflow-x-auto">
+                    <h3 class="text-lg font-semibold mb-3">因子分详情</h3>
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="py-2 px-4 border-b text-left">因子名称</th>
+                                <th class="py-2 px-4 border-b text-center">因子分</th>
+                                <th class="py-2 px-4 border-b text-left">结果解释</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="py-2 px-4 border-b">躯体化</td>
+                                <td class="py-2 px-4 border-b text-center font-bold text-red-600">2.58</td>
+                                <td class="py-2 px-4 border-b font-bold">主要反映主观的身体不适感，包括心血管、胃肠道、呼吸等系统的不适，以及头痛、背痛、肌肉酸痛等症状。高分可能表明您正经历明显的躯体不适，这些症状可能与心理压力相关。建议：1.进行医学检查排除身体疾病；2.学习放松技巧如深呼吸、渐进性肌肉松弛；3.规律作息和适度运动；4.关注情绪状态，必要时寻求心理咨询。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">强迫症状</td>
+                                <td class="py-2 px-4 border-b text-center font-bold text-red-600">2.80</td>
+                                <td class="py-2 px-4 border-b font-bold">主要指那些明知没有必要，但又无法摆脱的无意义的思想、冲动和行为，如反复洗手、检查、计数等。高分可能表示存在明显的强迫症状。建议：1.学习认知行为疗法中的暴露与反应阻止技术；2.减少对强迫思维的过度关注；3.培养正念意识，观察而不评判自己的想法；4.严重时寻求专业心理咨询或精神科医生帮助。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">人际关系敏感</td>
+                                <td class="py-2 px-4 border-b text-center">1.89</td>
+                                <td class="py-2 px-4 border-b">主要反映人际交往中的不自在感、自卑感，特别是与他人比较时更加突出。表现为对他人评价过度敏感、社交场合不自在、害怕被拒绝等。高分可能表示在人际关系方面存在困扰。建议：1.挑战消极的自我认知；2.学习有效的沟通技巧；3.逐步暴露于社交场合，积累成功经验；4.参加社交技能培训或团体心理咨询。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">抑郁</td>
+                                <td class="py-2 px-4 border-b text-center font-bold text-red-600">3.23</td>
+                                <td class="py-2 px-4 border-b font-bold">反映苦闷的情感与心境，包括对生活兴趣减退、动力缺乏、活力丧失、失望、悲观以及与抑郁相联系的认知和躯体感受，严重时可能有死亡的思想和自杀观念。高分可能表示存在明显的抑郁症状。建议：1.寻求专业心理咨询或精神科评估；2.保持规律的生活作息；3.适当进行体育锻炼；4.与亲友保持联系，避免孤立；5.学习认知重构技巧，挑战消极思维。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">焦虑</td>
+                                <td class="py-2 px-4 border-b text-center font-bold text-red-600">2.70</td>
+                                <td class="py-2 px-4 border-b font-bold">反映烦躁、坐立不安、神经过敏、紧张以及由此产生的躯体征象，如震颤、心悸、出汗等。高分可能表示存在明显的焦虑症状。建议：1.学习放松技巧，如深呼吸、渐进性肌肉松弛、冥想；2.规律运动，特别是有氧运动；3.改善睡眠质量；4.限制咖啡因和酒精摄入；5.严重时寻求专业帮助，可能需要心理治疗或药物干预。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">敌对</td>
+                                <td class="py-2 px-4 border-b text-center">1.67</td>
+                                <td class="py-2 px-4 border-b">主要从思想、感情及行为三方面反映敌对表现，包括厌烦的感觉、摔物、争论直到不可控制的脾气暴发等。高分可能表示存在明显的敌对情绪。建议：1.学习识别愤怒的早期信号；2.发展健康的情绪表达方式；3.练习冲突解决技巧；4.探索愤怒背后的潜在情绪，如挫折、恐惧或伤害；5.必要时寻求愤怒管理培训或心理咨询。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">恐怖</td>
+                                <td class="py-2 px-4 border-b text-center">1.43</td>
+                                <td class="py-2 px-4 border-b">反映对特定场所、情境或物体的恐惧，如对出门旅行、空旷场地、人群或公共场所的恐惧，也包括社交恐怖。高分可能表示存在明显的恐怖症状。建议：1.考虑认知行为疗法中的暴露疗法；2.学习放松技巧应对焦虑；3.逐步面对恐惧情境，建立自信；4.严重影响生活时寻求专业帮助。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">偏执</td>
+                                <td class="py-2 px-4 border-b text-center">1.83</td>
+                                <td class="py-2 px-4 border-b">主要指投射性思维、敌对、猜疑、妄想、被动体验和夸大等。表现为对他人动机持怀疑态度，认为自己受到监视或迫害，难以信任他人。高分可能表示存在明显的偏执观念。建议：1.尝试从多角度看待事件，挑战猜疑思维；2.检验对他人意图的假设；3.培养正念，观察而不立即反应；4.严重时寻求精神科评估和专业治疗。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">精神病性</td>
+                                <td class="py-2 px-4 border-b text-center">1.70</td>
+                                <td class="py-2 px-4 border-b">反映各式各样的急性症状和行为，如幻觉、思维播散、被控制感、思维被插入等精神病性症状。高分可能表示存在精神病性症状。建议：1.尽快寻求精神科医生评估；2.与信任的亲友分享感受；3.保持规律的生活作息；4.避免酒精和药物滥用；5.遵医嘱进行必要的治疗。</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">其他（睡眠饮食等）</td>
+                                <td class="py-2 px-4 border-b text-center font-bold text-red-600">2.43</td>
+                                <td class="py-2 px-4 border-b font-bold">主要反映睡眠和饮食方面的问题，如入睡困难、睡眠不深、早醒、食欲减退或增加等。高分可能表示存在睡眠或饮食问题。建议：1.建立健康的睡眠卫生习惯；2.保持规律的作息时间；3.注意饮食均衡；4.睡前避免咖啡因和电子设备；5.如持续存在问题，咨询医生或专业心理咨询师。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 雷达图 -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-3">因子分雷达图</h3>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <canvas id="radar-chart" height="300"></canvas>
+                    </div>
+                </div>
+                
+                <!-- 结果解释 -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-3">结果解释</h3>
+                    <div id="interpretation" class="text-gray-700">
+                        <p class="mb-3"><strong>躯体化</strong> (2.58分，轻度)：主要反映主观的身体不适感，包括心血管、胃肠道、呼吸等系统的不适，以及头痛、背痛、肌肉酸痛等症状。高分可能表明您正经历明显的躯体不适，这些症状可能与心理压力相关。建议：1.进行医学检查排除身体疾病；2.学习放松技巧如深呼吸、渐进性肌肉松弛；3.规律作息和适度运动；4.关注情绪状态，必要时寻求心理咨询。</p>
+                        <p class="mb-3"><strong>强迫症状</strong> (2.80分，中度)：主要指那些明知没有必要，但又无法摆脱的无意义的思想、冲动和行为，如反复洗手、检查、计数等。高分可能表示存在明显的强迫症状。建议：1.学习认知行为疗法中的暴露与反应阻止技术；2.减少对强迫思维的过度关注；3.培养正念意识，观察而不评判自己的想法；4.严重时寻求专业心理咨询或精神科医生帮助。</p>
+                        <p class="mb-3"><strong>抑郁</strong> (3.23分，中度)：反映苦闷的情感与心境，包括对生活兴趣减退、动力缺乏、活力丧失、失望、悲观以及与抑郁相联系的认知和躯体感受，严重时可能有死亡的思想和自杀观念。高分可能表示存在明显的抑郁症状。建议：1.寻求专业心理咨询或精神科评估；2.保持规律的生活作息；3.适当进行体育锻炼；4.与亲友保持联系，避免孤立；5.学习认知重构技巧，挑战消极思维。</p>
+                        <p class="mb-3"><strong>焦虑</strong> (2.70分，轻度)：反映烦躁、坐立不安、神经过敏、紧张以及由此产生的躯体征象，如震颤、心悸、出汗等。高分可能表示存在明显的焦虑症状。建议：1.学习放松技巧，如深呼吸、渐进性肌肉松弛、冥想；2.规律运动，特别是有氧运动；3.改善睡眠质量；4.限制咖啡因和酒精摄入；5.严重时寻求专业帮助，可能需要心理治疗或药物干预。</p>
+                        <p class="mb-3"><strong>其他（睡眠饮食等）</strong> (2.43分，轻度)：主要反映睡眠和饮食方面的问题，如入睡困难、睡眠不深、早醒、食欲减退或增加等。高分可能表示存在睡眠或饮食问题。建议：1.建立健康的睡眠卫生习惯；2.保持规律的作息时间；3.注意饮食均衡；4.睡前避免咖啡因和电子设备；5.如持续存在问题，咨询医生或专业心理咨询师。</p>
+                        
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4 mb-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fa fa-exclamation-triangle text-yellow-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-yellow-700">
+                                        <strong>总体评估：</strong>您的总分210分，阳性项目数52项，表明存在中度心理困扰。量表结果提示您可能需要关注自己的心理健康状况。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="font-bold mt-4 mb-2">专业建议：</h4>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>建议寻求专业心理咨询师的评估</li>
+                            <li>学习并练习压力管理和情绪调节技巧</li>
+                            <li>保持规律的生活作息和适当的体育锻炼</li>
+                            <li>与亲友保持良好沟通，获得社会支持</li>
+                            <li>定期进行心理健康自评，监测变化趋势</li>
+                        </ul>
+                        
+                        <div class="bg-gray-50 border-l-4 border-gray-400 p-4 mt-6">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fa fa-lightbulb-o text-gray-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-gray-700">
+                                        <strong>重要提示：</strong>SCL-90量表仅作为心理健康状况的初步筛查工具，不能替代专业的临床诊断。
+                                        量表结果应结合您的实际情况和专业人士的评估进行综合判断。如您感到明显不适，建议及时寻求专业帮助。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h4 class="font-bold mb-2">心理健康资源：</h4>
+                            <p class="text-sm text-gray-600">以下是一些心理健康资源，供您参考：</p>
+                            <ul class="list-disc pl-5 mt-2 text-sm text-gray-600">
+                                <li>心理援助热线：全国24小时心理危机热线 400-161-9995</li>
+                                <li>在线心理咨询平台：如壹心理、简单心理等</li>
+                                <li>心理健康APP：如潮汐、Calm、Mindfulness等</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="flex justify-center space-x-4 mt-8">
+                    <button id="restart-test" class="px-6 py-2 bg-primary text-white rounded-md hover:bg-blue-600 transition-all flex items-center">
+                        <i class="fa fa-refresh mr-2"></i> 重新测试
+                    </button>
+                    <button id="export-pdf" class="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-all flex items-center">
+                        <i class="fa fa-file-pdf-o mr-2"></i> 导出PDF
+                    </button>
+                    <button id="export-image" class="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-all flex items-center">
+                        <i class="fa fa-file-image-o mr-2"></i> 导出图片
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="mt-8 text-center text-gray-500 text-sm">
+            <p>© 2025 SCL-90症状自评量表 | 仅供参考，不能替代专业医疗建议</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 创建雷达图
+        function createRadarChart() {
+            const ctx = document.getElementById('radar-chart').getContext('2d');
+            
+            const factorNames = [
+                '躯体化', '强迫症状', '人际关系敏感', '抑郁', '焦虑', 
+                '敌对', '恐怖', '偏执', '精神病性', '其他'
+            ];
+            
+            const factorValues = [2.58, 2.80, 1.89, 3.23, 2.70, 1.67, 1.43, 1.83, 1.70, 2.43];
+            
+            const radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: factorNames,
+                    datasets: [{
+                        label: '因子分',
+                        data: factorValues,
+                        backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                        borderColor: 'rgba(74, 144, 226, 1)',
+                        pointBackgroundColor: 'rgba(74, 144, 226, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(74, 144, 226, 1)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `因子分: ${context.raw.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 页面加载完成后创建雷达图
+        document.addEventListener('DOMContentLoaded', function() {
+            createRadarChart();
+            
+            // 按钮点击事件
+            document.getElementById('restart-test').addEventListener('click', function() {
+                alert('重新测试功能已触发');
+            });
+            
+            document.getElementById('export-pdf').addEventListener('click', function() {
+                alert('PDF导出功能已触发');
+            });
+            
+            document.getElementById('export-image').addEventListener('click', function() {
+                alert('图片导出功能已触发');
+            });
+        });
+    </script>
+</body>
+</html>
